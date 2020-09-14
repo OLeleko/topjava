@@ -34,11 +34,13 @@ public class UserMealsUtil {
 
         for(UserMeal um : meals){
             LocalDate ld = um.getDateTime().toLocalDate();
-            if(map.containsKey(ld)){
+            /*if(map.containsKey(ld)){
                 map.put(ld, (map.get(ld) + um.getCalories()));
             }else{
                 map.put(ld, um.getCalories());
-            }
+            }*/
+
+            map.merge(ld, um.getCalories(), (a, b) -> a + b);
         }
 
         for(UserMeal m : meals){
