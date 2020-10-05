@@ -30,7 +30,6 @@
         }
     </style>
 </head>
-</head>
 <body>
 <table>
     <tr>
