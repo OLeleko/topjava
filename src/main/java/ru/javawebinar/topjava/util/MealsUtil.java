@@ -26,7 +26,7 @@ public class MealsUtil {
 
     public static void main(String[] args) {
 
-    List<MealTo> mealsTo = filteredByStreams(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        List<MealTo> mealsTo = filteredByStreams(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
 
         mealsTo.forEach(System.out::println);
     }
@@ -47,8 +47,8 @@ public class MealsUtil {
         return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 
-    public List<Meal> getMeals() {
+    public static List<Meal> getMeals() {
         return meals;
-        
+
     }
 }
