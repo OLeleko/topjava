@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Meal;
 
-import java.time.chrono.ChronoLocalDate;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface MealRepository {
@@ -17,5 +17,9 @@ public interface MealRepository {
 
     List<Meal> getAll(int userId);
 
-    List<Meal> dateFilter(ChronoLocalDate startDate, ChronoLocalDate endDate, int userId);
+    List<Meal> getFilteredDateBeforeList(LocalDate endDate, int userId);
+
+    List<Meal> getFilteredDateAfterList(LocalDate startDate, int userId);
+
+    List<Meal> getFilteredDateBetweenList(LocalDate startDate, LocalDate endDate, int userId);
 }
