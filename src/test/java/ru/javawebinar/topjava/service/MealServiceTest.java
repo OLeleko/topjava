@@ -15,6 +15,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
+import static ru.javawebinar.topjava.UserTestData.NOT_FOUND;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -34,33 +37,44 @@ public class MealServiceTest {
     }
 
     @Test
+    public void getWrongId() throws Exception{
+        assertThrows(NotFoundException.class, () -> mealService.get(NOT_FOUND, USER_ID));
+    }
+
+    @Test
     public void getWrongUser() throws Exception{
         assertThrows(NotFoundException.class, () -> mealService.get(MEAL_ID_1, ADMIN_ID));
     }
 
     @Test
     public void delete() throws Exception{
-        mealService.delete(100002, USER_ID);
-        assertThrows(NotFoundException.class, () -> mealService.get(100002, USER_ID));
+        mealService.delete(MEAL_ID_1, USER_ID);
+        assertThrows(NotFoundException.class, () -> mealService.get(MEAL_ID_1, USER_ID));
+    }
+
+    @Test
+    public void deleteWrongId() throws Exception{
+        assertThrows(NotFoundException.class, () -> mealService.delete(NOT_FOUND, USER_ID));
     }
 
     @Test
     public void getBetweenInclusive() {
-        List<Meal> meal = mealService.getBetweenInclusive(LocalDate.of(2020,10,19), LocalDate.of(2020, 10, 20), USER_ID);
-        assertMatch(meal, meal_1);
+        List<Meal> meal = mealService.getBetweenInclusive(LocalDate.of(2020,01,30), LocalDate.of(2020, 01, 30), USER_ID);
+        assertMatch(meal, meal_4, meal_3, meal_1);
     }
 
     @Test
     public void getAll() {
-        List<Meal> mealList = mealService.getAll(USER_ID);
-        assertMatch(mealList, meal_1);
+        List<Meal> mealList = mealService.getAll(ADMIN_ID);
+        assertMatch(mealList, meal_9, meal_2);
     }
 
     @Test
     public void update() {
         Meal updated = getUpdated();
+        Integer updatedId = updated.getId();
         mealService.update(updated, USER_ID);
-        assertMatch(mealService.get(updated.getId(), USER_ID), updated);
+        assertMatch(mealService.get(updatedId, USER_ID), updated);
     }
 
     @Test
@@ -71,9 +85,10 @@ public class MealServiceTest {
 
     @Test
     public void create() {
-        Meal newMeal = new Meal("Ужин", 200);
+        Meal newMeal = getNew();
         Meal created = mealService.create(newMeal, USER_ID);
-        newMeal.setId(created.getId());
-        assertMatch(mealService.getAll(USER_ID), newMeal, meal_1);
+        Integer newId = created.getId();
+        newMeal.setId(newId);
+        assertMatch(mealService.get(newId, USER_ID), newMeal);
     }
 }

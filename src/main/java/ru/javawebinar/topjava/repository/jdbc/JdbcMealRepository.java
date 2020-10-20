@@ -15,7 +15,6 @@ import java.util.List;
 
 @Repository
 public class JdbcMealRepository implements MealRepository {
-
     private static final BeanPropertyRowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -39,10 +38,11 @@ public class JdbcMealRepository implements MealRepository {
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories());
 
-        if(meal.isNew()) {
+        if (meal.isNew()) {
             Number newKey = insertMeal.executeAndReturnKey(map);
             meal.setId(newKey.intValue());
-        }else if (namedParameterJdbcTemplate.update("UPDATE meals SET datetime=:datetime, description =:description, calories =:calories WHERE id=:id AND user_id=:user_id", map) == 0){
+        } else if (namedParameterJdbcTemplate.update("UPDATE meals SET datetime=:datetime, description =:description," +
+                " calories =:calories WHERE id=:id AND user_id=:user_id", map) == 0) {
             return null;
         }
         return meal;
@@ -67,10 +67,9 @@ public class JdbcMealRepository implements MealRepository {
         return jdbcTemplate.query("SELECT * FROM meals WHERE user_id = ? ORDER BY datetime DESC", ROW_MAPPER, userId);
     }
 
-
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
 
-        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id = ? AND datetime BETWEEN ? AND ? ORDER BY datetime DESC", ROW_MAPPER, userId, startDateTime, endDateTime);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id = ? AND datetime >= ? AND datetime < ? ORDER BY datetime DESC", ROW_MAPPER, userId, startDateTime, endDateTime);
     }
 }
