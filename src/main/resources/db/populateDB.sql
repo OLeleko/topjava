@@ -9,3 +9,8 @@ VALUES ('User', 'user@yandex.ru', 'password'),
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 100000),
        ('ADMIN', 100001);
+
+INSERT INTO meals (user_id, description, calories)
+VALUES ('100000', 'Завтрак', 500),
+       ('100001', 'Zavtrac', 1500);
+
