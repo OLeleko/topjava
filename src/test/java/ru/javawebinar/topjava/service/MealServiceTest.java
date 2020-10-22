@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -58,8 +59,19 @@ public class MealServiceTest {
     }
 
     @Test
+    public void deleteWrongOwner() throws Exception{
+        assertThrows(NotFoundException.class, () -> mealService.delete(MEAL_ID_1, ADMIN_ID));
+    }
+
+    @Test
     public void getBetweenInclusive() {
         List<Meal> meal = mealService.getBetweenInclusive(LocalDate.of(2020,01,30), LocalDate.of(2020, 01, 30), USER_ID);
+        assertMatch(meal, meal_4, meal_3, meal_1);
+    }
+
+    @Test
+    public void getBetweenInclusiveNullData() {
+        List<Meal> meal = mealService.getBetweenInclusive(null, LocalDate.of(2020, 01, 30), USER_ID);
         assertMatch(meal, meal_4, meal_3, meal_1);
     }
 
@@ -90,5 +102,11 @@ public class MealServiceTest {
         Integer newId = created.getId();
         newMeal.setId(newId);
         assertMatch(mealService.get(newId, USER_ID), newMeal);
+    }
+
+    @Test
+    public void createIdenticalDate() {
+        Meal newMeal = getNewIdenticalDate();
+        assertThrows(DuplicateKeyException.class, () -> mealService.create(newMeal, USER_ID));
     }
 }

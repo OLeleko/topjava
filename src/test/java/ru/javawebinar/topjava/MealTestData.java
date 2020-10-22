@@ -19,7 +19,7 @@ public class MealTestData {
     public static final int MEAL_ID_8 = START_SEQ + 9;
     public static final int MEAL_ID_9 = START_SEQ + 10;
 
-    public static final Meal meal_1 = new Meal (MEAL_ID_1, LocalDateTime.of(2020,01,30,10,00), "Завтрак", 500);
+    public static final Meal meal_1 = new Meal (MEAL_ID_1, LocalDateTime.of(2020, 1,30,10, 0), "Завтрак", 500);
     public static final Meal meal_2 = new Meal (MEAL_ID_2, LocalDateTime.of(2020,01,30,9,00), "Zavtrak", 511);
     public static final Meal meal_3 = new Meal (MEAL_ID_3, LocalDateTime.of(2020,01,30,13,00), "Обед", 1000);
     public static final Meal meal_4 = new Meal (MEAL_ID_4, LocalDateTime.of(2020,01,30,20,00), "Ужин", 500);
@@ -31,6 +31,10 @@ public class MealTestData {
 
     public static Meal getNew(){
         return new Meal(LocalDateTime.of(2020, 01, 28, 10,00),"New", 300);
+    }
+
+    public static Meal getNewIdenticalDate(){
+        return new Meal(LocalDateTime.of(2020, 01, 30, 13,00),"New", 300);
     }
 
     public static Meal getUpdated(){
