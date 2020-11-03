@@ -7,6 +7,7 @@ public class Profiles {
             DATAJPA = "datajpa";
 
     public static final String REPOSITORY_IMPLEMENTATION = DATAJPA;
+    public static final String REPOSITORY_COMMON = "datajpa_jpa";
 
     public static final String
             POSTGRES_DB = "postgres",
