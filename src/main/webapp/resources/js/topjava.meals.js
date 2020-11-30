@@ -1,28 +1,20 @@
 var ctx;
 
-// $(document).ready(function () {
 $(function () {
-    // https://stackoverflow.com/a/5064235/548473
     ctx = {
-        ajaxUrl: "admin/users/",
+        ajaxUrl: "js/meals/",
         datatableApi: $("#datatable").DataTable({
             "paging": false,
             "info": true,
             "columns": [
                 {
-                    "data": "name"
+                    "data": "dateTime"
                 },
                 {
-                    "data": "email"
+                    "data": "description"
                 },
                 {
-                    "data": "roles"
-                },
-                {
-                    "data": "enabled"
-                },
-                {
-                    "data": "registered"
+                    "data": "calories"
                 },
                 {
                     "defaultContent": "Edit",
@@ -33,15 +25,13 @@ $(function () {
                     "orderable": false
                 }
             ],
-            "order": [
+            "order":[
                 [
                     0,
-                    "asc"
+                    "desc"
                 ]
             ]
         })
     };
     makeEditable();
-})
-
-
+});
