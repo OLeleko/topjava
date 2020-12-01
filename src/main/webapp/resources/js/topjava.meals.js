@@ -34,4 +34,9 @@ $(function () {
         })
     };
     makeEditable();
+})
+
+$(function () {
+    $('#dateTime').datetimepicker();
 });
+
