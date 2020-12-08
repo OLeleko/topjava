@@ -21,6 +21,7 @@
 
         <intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <!--<intercept-url pattern="/**" access="permitAll()"/>-->
 
         <form-login login-page="/login" default-target-url="/meals"
                     authentication-failure-url="/login?error=true"
