@@ -11,17 +11,11 @@ import java.util.Objects;
 
 public class MealTo extends BaseTo {
 
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private  LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    @NotBlank
-    private  String description;
+    private String description;
 
-    @NotNull
-    @Range(min=10, max = 5000)
-    private  Integer calories;
-
+    private int calories;
 
     private boolean excess;
 
@@ -34,7 +28,7 @@ public class MealTo extends BaseTo {
         this.excess = excess;
     }
 
-    public void setDateTime(LocalDateTime dateTime){
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

@@ -117,4 +117,10 @@ class MealRestControllerTest extends AbstractControllerTest {
             assertThat(e, is(instanceOf(NestedServletException.class)));
         }
     }
+
+    @Test
+    void getUnAuthorized() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + MEAL1_ID))
+                .andExpect(status().isUnauthorized());
+    }
 }
