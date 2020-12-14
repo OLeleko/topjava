@@ -75,6 +75,7 @@ public class ValidationUtil {
         while (null != (cause = result.getCause()) && (result != cause)) {
             result = cause;
         }
+
         return result;
     }
 

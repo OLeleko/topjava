@@ -54,4 +54,19 @@ public class UserTestData {
     public static String jsonWithPassword(User user, String passw) {
         return JsonUtil.writeAdditionProps(user, "password", passw);
     }
+
+    public static User getWrongNew(){
+        return new User(null, "New", "new@gmail.com", "newPass", 34567, false, new Date(), Collections.singleton(Role.USER));
+    }
+
+    public static User getWrongUpdated(){
+        User updated = new User(user);
+        updated.setEmail("wrongupdate@gmail.com");
+        updated.setName("UpdatedName");
+        updated.setCaloriesPerDay(22567);
+        updated.setPassword("newPass");
+        updated.setEnabled(false);
+        updated.setRoles(Collections.singletonList(Role.ADMIN));
+        return updated;
+    }
 }

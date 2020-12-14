@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.util.exception.ErrorInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -22,9 +23,15 @@ public class GlobalExceptionHandler {
         Throwable rootCause = ValidationUtil.getRootCause(e);
 
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        ModelAndView mav = new ModelAndView("exception",
+        ModelAndView mav = null;
+        if(rootCause.toString().contains("users_unique_email_idx")){
+            mav = new ModelAndView("exception",
+                    Map.of("exception", rootCause, "message", "User with this email already exists", "status", ""));
+            mav.setStatus(httpStatus);
+        }else{
+        mav = new ModelAndView("exception",
                 Map.of("exception", rootCause, "message", rootCause.toString(), "status", httpStatus));
-        mav.setStatus(httpStatus);
+        mav.setStatus(httpStatus);}
 
         // Interceptor is not invoked, put userTo
         AuthorizedUser authorizedUser = SecurityUtil.safeGet();
